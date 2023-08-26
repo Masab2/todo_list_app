@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ? ListTile(
                                             onTap: () {
                                               HiveHelper.deleteData(
-                                                  data[index]);
+                                                  incompleteTasks[index]);
                                             },
                                             leading: CircleAvatar(
                                                 radius: 20,
@@ -111,13 +111,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       AppColor.lightpurpleColor,
                                                 )),
                                             title: Text(
-                                              data[index].title.toString(),
+                                              incompleteTasks[index]
+                                                  .title
+                                                  .toString(),
                                               style: GoogleFonts.dekko(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w700),
                                             ),
                                             subtitle: Text(
-                                              data[index]
+                                              incompleteTasks[index]
                                                   .time
                                                   .toString(),
                                               style: GoogleFonts.dekko(
@@ -126,12 +128,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       FontWeight.normal),
                                             ),
                                             trailing: Checkbox(
-                                              value: data[index].completed,
+                                              value: incompleteTasks[index]
+                                                  .completed,
                                               onChanged: (value) {
-                                                data[index].completed = value!;
-                                                data[index].save();
-                                                box.put(data[index].key,
-                                                    data[index]);
+                                                incompleteTasks[index]
+                                                    .completed = value!;
+                                                incompleteTasks[index].save();
+                                                box.put(
+                                                    incompleteTasks[index].key,
+                                                    incompleteTasks[index]);
                                               },
                                             ),
                                           )
@@ -149,7 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                             );
                           } else {
-                            return const Center(child: Text('Create a New task'));
+                            return const Center(
+                                child: Text('Create a New task'));
                           }
                         },
                       )),
@@ -185,63 +191,72 @@ class _HomeScreenState extends State<HomeScreen> {
                               data.where((task) => !task.completed).toList();
                           var completedTasks =
                               data.where((task) => task.completed).toList();
-                          if(completedTasks.isNotEmpty){
+                          if (completedTasks.isNotEmpty) {
                             return ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: completedTasks.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  completedTasks.isNotEmpty
-                                      ? ListTile(
-                                          onTap: () {
-                                            HiveHelper.deleteData(completedTasks[index]);
-                                          },
-                                          leading: CircleAvatar(
-                                              radius: 20,
-                                              backgroundColor:
-                                                  color.getRandomColor(),
-                                              child: const Icon(
-                                                FontAwesomeIcons.edit,
-                                                size: 18,
-                                                color:
-                                                    AppColor.lightpurpleColor,
-                                              )),
-                                          title: Text(
-                                            completedTasks[index].title.toString(),
-                                            style: GoogleFonts.dekko(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                          subtitle: Text(
-                                            completedTasks[index].time.toString(),
-                                            style: GoogleFonts.dekko(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.normal),
-                                          ),
-                                          trailing: Checkbox(
-                                            value: completedTasks[index].completed,
-                                            onChanged: (value) {
-                                              completedTasks[index].completed = value!;
-                                            completedTasks[index].save();
-                                              box.put(
-                                                  completedTasks[index].key, completedTasks[index]);
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: completedTasks.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    completedTasks.isNotEmpty
+                                        ? ListTile(
+                                            onTap: () {
+                                              HiveHelper.deleteData(
+                                                  completedTasks[index]);
                                             },
-                                          ),
-                                        )
-                                      : const Text('No Completd Task'),
-                                  const Divider(
-                                    thickness: 2.0,
-                                    endIndent: 25,
-                                    indent: 25,
-                                  )
-                                ],
-                              );
-                            },
-                          );
-                          }else{
+                                            leading: CircleAvatar(
+                                                radius: 20,
+                                                backgroundColor:
+                                                    color.getRandomColor(),
+                                                child: const Icon(
+                                                  FontAwesomeIcons.edit,
+                                                  size: 18,
+                                                  color:
+                                                      AppColor.lightpurpleColor,
+                                                )),
+                                            title: Text(
+                                              completedTasks[index]
+                                                  .title
+                                                  .toString(),
+                                              style: GoogleFonts.dekko(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            subtitle: Text(
+                                              completedTasks[index]
+                                                  .time
+                                                  .toString(),
+                                              style: GoogleFonts.dekko(
+                                                  fontSize: 16,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                            trailing: Checkbox(
+                                              value: completedTasks[index]
+                                                  .completed,
+                                              onChanged: (value) {
+                                                completedTasks[index]
+                                                    .completed = value!;
+                                                completedTasks[index].save();
+                                                box.put(
+                                                    completedTasks[index].key,
+                                                    completedTasks[index]);
+                                              },
+                                            ),
+                                          )
+                                        : const Text('No Completd Task'),
+                                    const Divider(
+                                      thickness: 2.0,
+                                      endIndent: 25,
+                                      indent: 25,
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
                             return const Center(
-                              child: Text('No Completed Task'));
+                                child: Text('No Completed Task'));
                           }
                         },
                       )),
