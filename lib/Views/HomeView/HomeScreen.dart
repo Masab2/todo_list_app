@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   completedTasks.isNotEmpty
                                       ? ListTile(
                                           onTap: () {
-                                            HiveHelper.deleteData(data[index]);
+                                            HiveHelper.deleteData(completedTasks[index]);
                                           },
                                           leading: CircleAvatar(
                                               radius: 20,
@@ -208,24 +208,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     AppColor.lightpurpleColor,
                                               )),
                                           title: Text(
-                                            data[index].title.toString(),
+                                            completedTasks[index].title.toString(),
                                             style: GoogleFonts.dekko(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w700),
                                           ),
                                           subtitle: Text(
-                                            data[index].time.toString(),
+                                            completedTasks[index].time.toString(),
                                             style: GoogleFonts.dekko(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.normal),
                                           ),
                                           trailing: Checkbox(
-                                            value: data[index].completed,
+                                            value: completedTasks[index].completed,
                                             onChanged: (value) {
-                                              data[index].completed = value!;
-                                              data[index].save();
+                                              completedTasks[index].completed = value!;
+                                            completedTasks[index].save();
                                               box.put(
-                                                  data[index].key, data[index]);
+                                                  completedTasks[index].key, completedTasks[index]);
                                             },
                                           ),
                                         )
